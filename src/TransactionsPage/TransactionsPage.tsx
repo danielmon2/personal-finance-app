@@ -12,8 +12,11 @@ type DataTransaction = {
 }[];
 
 function TransactionsPage() {
-  // Add default
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Handle errors
+  const [searchParams, setSearchParams] = useSearchParams({
+    sort: "latest",
+    category: "all",
+  });
   let transactionArr = data.transactions;
 
   if (searchParams.get("category") !== null) {
@@ -24,13 +27,36 @@ function TransactionsPage() {
     const sort = searchParams.get("sort") as string;
     transactionArr = sortTransactions(transactionArr, sort);
   }
+  if (searchParams.get("search") !== null) {
+    const search = searchParams.get("search") as string;
+    transactionArr = searchTransactions(transactionArr, search);
+  }
 
   return (
     <main>
       <h1>Transactions</h1>
       <section>
         <div>
+          <input
+            placeholder="Search transactions"
+            onChange={(e) =>
+              setSearchParams(
+                newSearchParams(
+                  searchParams,
+                  e.target.value,
+                  "search"
+                ) as URLSearchParams
+              )
+            }
+          ></input>
+          <label htmlFor="sort-select">Sort by</label>
           <select
+            id="sort-select"
+            defaultValue={
+              searchParams.get("sort") === null
+                ? "latest"
+                : searchParams.get("sort")
+            }
             onChange={(e) =>
               setSearchParams(
                 newSearchParams(
@@ -48,7 +74,10 @@ function TransactionsPage() {
             <option value="highest">Highest</option>
             <option value="lowest">Lowest</option>
           </select>
+          <label htmlFor="category-select">Category</label>
           <select
+            id="category-select"
+            defaultValue={searchParams.get("category")}
             onChange={(e) =>
               setSearchParams(
                 newSearchParams(
@@ -86,6 +115,12 @@ function TransactionsPage() {
     </main>
   );
 }
+function searchTransactions(
+  arr: DataTransaction,
+  search: string
+): DataTransaction {
+  return arr.filter((item) => item.name.toLowerCase().startsWith(search));
+}
 
 function newSearchParams(
   searchParams: URLSearchParams,
@@ -94,6 +129,7 @@ function newSearchParams(
 ): object {
   const newSearchParams = Object.fromEntries(searchParams);
   newSearchParams[type] = value;
+  console.log(newSearchParams);
   return newSearchParams;
 }
 
