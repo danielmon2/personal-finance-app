@@ -11,6 +11,22 @@ type DataTransaction = {
   recurring: boolean;
 }[];
 
+const CATEGORIES = [
+  "all",
+  "dining-out",
+  "general",
+  "groceries",
+  "entertainment",
+  "transportation",
+  "lifestyle",
+  "personal-care",
+  "education",
+  "bills",
+  "shopping",
+];
+
+const SORTING = ["latest", "oldest", "az", "za", "highest", "lowest"];
+
 function TransactionsPage() {
   // Handle errors
   const [searchParams, setSearchParams] = useSearchParams({
@@ -18,6 +34,9 @@ function TransactionsPage() {
     category: "all",
   });
   let transactionArr = data.transactions;
+
+  // Standarize search params
+  console.log(searchParams);
 
   if (searchParams.get("category") !== null) {
     const category = searchParams.get("category") as string;
@@ -67,12 +86,19 @@ function TransactionsPage() {
               )
             }
           >
-            <option value="latest">Latest</option>
-            <option value="oldest">Oldest</option>
-            <option value="az">A - Z</option>
-            <option value="za">Z - A</option>
-            <option value="highest">Highest</option>
-            <option value="lowest">Lowest</option>
+            {SORTING.map((item, index) => {
+              let string = item[0].toUpperCase() + item.slice(1);
+              if (item === "az") {
+                string = "A - Z";
+              } else if (item === "za") {
+                string = "Z - A";
+              }
+              return (
+                <option key={index} value={item}>
+                  {string}
+                </option>
+              );
+            })}
           </select>
           <label htmlFor="category-select">Category</label>
           <select
@@ -88,17 +114,15 @@ function TransactionsPage() {
               )
             }
           >
-            <option value="all">All transactions</option>
-            <option value="dining-out">Dining Out</option>
-            <option value="general">General</option>
-            <option value="groceries">Groceries</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="transportation">Transportation</option>
-            <option value="lifestyle">Lifestyle</option>
-            <option value="personal-care">Personal Care</option>
-            <option value="education">Education</option>
-            <option value="bills">Bills</option>
-            <option value="shopping">Shopping</option>
+            {CATEGORIES.map((item, index) => {
+              let string = item.replace("-", " ");
+              string = string[0].toUpperCase() + string.slice(1);
+              return (
+                <option key={index} value={item}>
+                  {string}
+                </option>
+              );
+            })}
           </select>
         </div>
         <ul>
@@ -119,7 +143,9 @@ function searchTransactions(
   arr: DataTransaction,
   search: string
 ): DataTransaction {
-  return arr.filter((item) => item.name.toLowerCase().startsWith(search));
+  return arr.filter((item) =>
+    item.name.toLowerCase().startsWith(search.toLowerCase())
+  );
 }
 
 function newSearchParams(
@@ -129,7 +155,6 @@ function newSearchParams(
 ): object {
   const newSearchParams = Object.fromEntries(searchParams);
   newSearchParams[type] = value;
-  console.log(newSearchParams);
   return newSearchParams;
 }
 
