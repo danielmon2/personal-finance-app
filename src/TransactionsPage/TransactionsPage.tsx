@@ -11,6 +11,8 @@ type DataTransaction = {
   recurring: boolean;
 }[];
 
+const URL_PARAMETERS = ["sort", "category", "search"];
+
 const CATEGORIES = [
   "all",
   "dining-out",
@@ -28,26 +30,27 @@ const CATEGORIES = [
 const SORTING = ["latest", "oldest", "az", "za", "highest", "lowest"];
 
 function TransactionsPage() {
-  // Handle errors
-  const [searchParams, setSearchParams] = useSearchParams({
-    sort: "latest",
-    category: "all",
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
   let transactionArr = data.transactions;
 
   // Standarize search params
-  console.log(searchParams);
+  let newParams = standarizeSearchParams(searchParams);
+  if (newParams !== null) {
+    console.log(newParams);
+  } else {
+    newParams = new URLSearchParams(searchParams);
+  }
 
-  if (searchParams.get("category") !== null) {
-    const category = searchParams.get("category") as string;
+  if (newParams.get("category") !== null) {
+    const category = newParams.get("category") as string;
     transactionArr = filterTransactionsByCategory(transactionArr, category);
   }
-  if (searchParams.get("sort") !== null) {
-    const sort = searchParams.get("sort") as string;
+  if (newParams.get("sort") !== null) {
+    const sort = newParams.get("sort") as string;
     transactionArr = sortTransactions(transactionArr, sort);
   }
-  if (searchParams.get("search") !== null) {
-    const search = searchParams.get("search") as string;
+  if (newParams.get("search") !== null) {
+    const search = newParams.get("search") as string;
     transactionArr = searchTransactions(transactionArr, search);
   }
 
@@ -57,11 +60,12 @@ function TransactionsPage() {
       <section>
         <div>
           <input
+            defaultValue={""}
             placeholder="Search transactions"
             onChange={(e) =>
               setSearchParams(
-                newSearchParams(
-                  searchParams,
+                createNewSearchParams(
+                  newParams,
                   e.target.value,
                   "search"
                 ) as URLSearchParams
@@ -72,14 +76,14 @@ function TransactionsPage() {
           <select
             id="sort-select"
             defaultValue={
-              searchParams.get("sort") === null
+              newParams.get("sort") === null
                 ? "latest"
-                : searchParams.get("sort")
+                : (newParams.get("sort") as string)
             }
             onChange={(e) =>
               setSearchParams(
-                newSearchParams(
-                  searchParams,
+                createNewSearchParams(
+                  newParams,
                   e.target.value,
                   "sort"
                 ) as URLSearchParams
@@ -103,11 +107,15 @@ function TransactionsPage() {
           <label htmlFor="category-select">Category</label>
           <select
             id="category-select"
-            defaultValue={searchParams.get("category")}
+            defaultValue={
+              newParams.get("category") === null
+                ? "all"
+                : (newParams.get("category") as string)
+            }
             onChange={(e) =>
               setSearchParams(
-                newSearchParams(
-                  searchParams,
+                createNewSearchParams(
+                  newParams,
                   e.target.value,
                   "category"
                 ) as URLSearchParams
@@ -139,6 +147,29 @@ function TransactionsPage() {
     </main>
   );
 }
+
+function standarizeSearchParams(
+  searchParams: URLSearchParams
+): URLSearchParams | null {
+  const newSearchParams = new URLSearchParams(searchParams);
+  let changed = false;
+  for (const key of newSearchParams.keys()) {
+    if (!URL_PARAMETERS.includes(key)) {
+      newSearchParams.delete(key);
+      changed = true;
+    }
+  }
+
+  for (const [key, value] of newSearchParams.entries()) {
+    if (!SORTING.includes(value) && !CATEGORIES.includes(value)) {
+      newSearchParams.delete(key);
+      changed = true;
+    }
+  }
+
+  return changed ? newSearchParams : null;
+}
+
 function searchTransactions(
   arr: DataTransaction,
   search: string
@@ -148,7 +179,7 @@ function searchTransactions(
   );
 }
 
-function newSearchParams(
+function createNewSearchParams(
   searchParams: URLSearchParams,
   value: string,
   type: string
