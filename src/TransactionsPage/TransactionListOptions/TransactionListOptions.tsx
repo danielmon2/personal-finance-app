@@ -18,11 +18,7 @@ function TransactionListOptions({
         placeholder="Search transactions"
         onChange={(e) =>
           setSearchParams(
-            createNewSearchParams(
-              searchParams,
-              e.target.value,
-              "search"
-            ) as URLSearchParams
+            createNewSearchParams(searchParams, e.target.value, "search")
           )
         }
       ></input>
@@ -36,11 +32,7 @@ function TransactionListOptions({
         }
         onChange={(e) =>
           setSearchParams(
-            createNewSearchParams(
-              searchParams,
-              e.target.value,
-              "sort"
-            ) as URLSearchParams
+            createNewSearchParams(searchParams, e.target.value, "sort")
           )
         }
       >
@@ -68,11 +60,7 @@ function TransactionListOptions({
         }
         onChange={(e) =>
           setSearchParams(
-            createNewSearchParams(
-              searchParams,
-              e.target.value,
-              "category"
-            ) as URLSearchParams
+            createNewSearchParams(searchParams, e.target.value, "category")
           )
         }
       >
@@ -94,9 +82,9 @@ function createNewSearchParams(
   searchParams: URLSearchParams,
   value: string,
   type: string
-): object {
-  const newSearchParams = Object.fromEntries(searchParams);
-  newSearchParams[type] = value;
+): URLSearchParams {
+  const newSearchParams = new URLSearchParams(searchParams);
+  newSearchParams.set(type, value);
   return newSearchParams;
 }
 
