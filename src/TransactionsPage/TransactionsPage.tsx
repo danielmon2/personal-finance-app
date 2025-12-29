@@ -4,8 +4,9 @@ import TransactionListOptions from "./TransactionListOptions/TransactionListOpti
 import "./TransactionPage.css";
 
 import data from "../data/data.json";
+import TransactionList from "./TransactionList/TransactionList";
 
-type DataTransaction = {
+export type DataTransaction = {
   avatar: string;
   name: string;
   category: string;
@@ -40,6 +41,7 @@ function TransactionsPage() {
   // Return same params if there's no change
   const newParams = standarizeSearchParams(searchParams);
 
+  // Filter and categorize
   if (newParams.get("category") !== null) {
     const category = newParams.get("category") as string;
     transactionArr = filterTransactionsByCategory(transactionArr, category);
@@ -63,29 +65,7 @@ function TransactionsPage() {
           sorting={SORTING}
           categories={CATEGORIES}
         />
-        <ul>
-          {transactionArr.map((transactionItem, index) => (
-            <article
-              className="trans-list__item trans-list__item--primary"
-              key={index}
-            >
-              <img
-                className="trans-list__item__avatar"
-                src={transactionItem.avatar}
-              />
-              <div>
-                <p className="font--bold">{transactionItem.name}</p>
-                <p className="font--grey">{transactionItem.category}</p>
-              </div>
-              <div className="margin-left--auto">
-                <p className="text-align--rigth font--bold">
-                  {transactionItem.amount}
-                </p>
-                <p className="font--grey">{formatDate(transactionItem.date)}</p>
-              </div>
-            </article>
-          ))}
-        </ul>
+        <TransactionList transactionArr={transactionArr} />
       </section>
     </main>
   );
@@ -117,15 +97,6 @@ function searchTransactions(
   return arr.filter((item) =>
     item.name.toLowerCase().startsWith(search.toLowerCase())
   );
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
 }
 
 // sorting func
