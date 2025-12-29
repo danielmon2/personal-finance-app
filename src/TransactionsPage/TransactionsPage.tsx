@@ -37,12 +37,8 @@ function TransactionsPage() {
   let transactionArr = data.transactions;
 
   // Standarize search params
-  let newParams = standarizeSearchParams(searchParams);
-  if (newParams !== null) {
-    console.log(newParams);
-  } else {
-    newParams = new URLSearchParams(searchParams);
-  }
+  // Return same params if there's no change
+  const newParams = standarizeSearchParams(searchParams);
 
   if (newParams.get("category") !== null) {
     const category = newParams.get("category") as string;
@@ -97,24 +93,21 @@ function TransactionsPage() {
 
 function standarizeSearchParams(
   searchParams: URLSearchParams
-): URLSearchParams | null {
+): URLSearchParams {
   const newSearchParams = new URLSearchParams(searchParams);
-  let changed = false;
   for (const key of newSearchParams.keys()) {
     if (!URL_PARAMETERS.includes(key)) {
       newSearchParams.delete(key);
-      changed = true;
     }
   }
 
   for (const [key, value] of newSearchParams.entries()) {
     if (!SORTING.includes(value) && !CATEGORIES.includes(value)) {
       newSearchParams.delete(key);
-      changed = true;
     }
   }
 
-  return changed ? newSearchParams : null;
+  return newSearchParams;
 }
 
 function searchTransactions(
