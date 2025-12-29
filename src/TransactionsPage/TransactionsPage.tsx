@@ -1,5 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 
+import TransactionListOptions from "./TransactionListOptions/TransactionListOptions";
+import "./TransactionPage.css";
+
 import data from "../data/data.json";
 
 type DataTransaction = {
@@ -55,91 +58,35 @@ function TransactionsPage() {
   }
 
   return (
-    <main>
+    <main className="page page--primary">
       <h1>Transactions</h1>
-      <section>
-        <div>
-          <input
-            defaultValue={""}
-            placeholder="Search transactions"
-            onChange={(e) =>
-              setSearchParams(
-                createNewSearchParams(
-                  newParams,
-                  e.target.value,
-                  "search"
-                ) as URLSearchParams
-              )
-            }
-          ></input>
-          <label htmlFor="sort-select">Sort by</label>
-          <select
-            id="sort-select"
-            defaultValue={
-              newParams.get("sort") === null
-                ? "latest"
-                : (newParams.get("sort") as string)
-            }
-            onChange={(e) =>
-              setSearchParams(
-                createNewSearchParams(
-                  newParams,
-                  e.target.value,
-                  "sort"
-                ) as URLSearchParams
-              )
-            }
-          >
-            {SORTING.map((item, index) => {
-              let string = item[0].toUpperCase() + item.slice(1);
-              if (item === "az") {
-                string = "A - Z";
-              } else if (item === "za") {
-                string = "Z - A";
-              }
-              return (
-                <option key={index} value={item}>
-                  {string}
-                </option>
-              );
-            })}
-          </select>
-          <label htmlFor="category-select">Category</label>
-          <select
-            id="category-select"
-            defaultValue={
-              newParams.get("category") === null
-                ? "all"
-                : (newParams.get("category") as string)
-            }
-            onChange={(e) =>
-              setSearchParams(
-                createNewSearchParams(
-                  newParams,
-                  e.target.value,
-                  "category"
-                ) as URLSearchParams
-              )
-            }
-          >
-            {CATEGORIES.map((item, index) => {
-              let string = item.replace("-", " ");
-              string = string[0].toUpperCase() + string.slice(1);
-              return (
-                <option key={index} value={item}>
-                  {string}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+      <section className="trans-list trans-list--primary">
+        <TransactionListOptions
+          searchParams={newParams}
+          setSearchParams={setSearchParams}
+          sorting={SORTING}
+          categories={CATEGORIES}
+        />
         <ul>
           {transactionArr.map((transactionItem, index) => (
-            <article key={index}>
-              <p>{transactionItem.name}</p>
-              <p>{transactionItem.category}</p>
-              <p>{formatDate(transactionItem.date)}</p>
-              <p>{transactionItem.amount}</p>
+            <article
+              className="trans-list__item trans-list__item--primary"
+              key={index}
+            >
+              <img
+                className="trans-list__item__avatar"
+                src={transactionItem.avatar}
+              />
+              <div>
+                <p className="font--bold">{transactionItem.name}</p>
+                <p className="font--grey">{transactionItem.category}</p>
+              </div>
+              <div className="margin-left--auto">
+                <p className="text-align--rigth font--bold">
+                  {transactionItem.amount}
+                </p>
+                <p className="font--grey">{formatDate(transactionItem.date)}</p>
+              </div>
             </article>
           ))}
         </ul>
@@ -177,16 +124,6 @@ function searchTransactions(
   return arr.filter((item) =>
     item.name.toLowerCase().startsWith(search.toLowerCase())
   );
-}
-
-function createNewSearchParams(
-  searchParams: URLSearchParams,
-  value: string,
-  type: string
-): object {
-  const newSearchParams = Object.fromEntries(searchParams);
-  newSearchParams[type] = value;
-  return newSearchParams;
 }
 
 function formatDate(dateString: string): string {
