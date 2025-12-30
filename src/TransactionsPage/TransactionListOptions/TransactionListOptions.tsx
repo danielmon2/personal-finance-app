@@ -1,3 +1,6 @@
+import StyledSelect from "./StyledSelect";
+import "./TransactionListOptions.css";
+
 type TransactionListOptionsProps = {
   searchParams: URLSearchParams;
   setSearchParams: React.Dispatch<React.SetStateAction<URLSearchParams>>;
@@ -11,9 +14,14 @@ function TransactionListOptions({
   sorting,
   categories,
 }: TransactionListOptionsProps) {
+  function handleSelectClick(value: string, type: string): void {
+    setSearchParams(createNewSearchParams(searchParams, value, type));
+  }
+
   return (
-    <div>
+    <div className="options">
       <input
+        className="options__input options__input--primary"
         defaultValue={""}
         placeholder="Search transactions"
         onChange={(e) =>
@@ -22,58 +30,26 @@ function TransactionListOptions({
           )
         }
       ></input>
-      <label htmlFor="sort-select">Sort by</label>
-      <select
-        id="sort-select"
-        defaultValue={
+      <StyledSelect
+        options={sorting}
+        type="sort"
+        current={
           searchParams.get("sort") === null
             ? "latest"
             : (searchParams.get("sort") as string)
         }
-        onChange={(e) =>
-          setSearchParams(
-            createNewSearchParams(searchParams, e.target.value, "sort")
-          )
-        }
-      >
-        {sorting.map((item, index) => {
-          let string = item[0].toUpperCase() + item.slice(1);
-          if (item === "az") {
-            string = "A - Z";
-          } else if (item === "za") {
-            string = "Z - A";
-          }
-          return (
-            <option key={index} value={item}>
-              {string}
-            </option>
-          );
-        })}
-      </select>
-      <label htmlFor="category-select">Category</label>
-      <select
-        id="category-select"
-        defaultValue={
+        handleClick={handleSelectClick}
+      />
+      <StyledSelect
+        options={categories}
+        type="category"
+        current={
           searchParams.get("category") === null
             ? "all"
             : (searchParams.get("category") as string)
         }
-        onChange={(e) =>
-          setSearchParams(
-            createNewSearchParams(searchParams, e.target.value, "category")
-          )
-        }
-      >
-        {categories.map((item, index) => {
-          let string = item.replace("-", " ");
-          string = string[0].toUpperCase() + string.slice(1);
-          return (
-            <option key={index} value={item}>
-              {string}
-            </option>
-          );
-        })}
-      </select>
+        handleClick={handleSelectClick}
+      />
     </div>
   );
 }
