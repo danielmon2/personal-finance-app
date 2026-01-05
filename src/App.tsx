@@ -8,6 +8,8 @@ import BudgetsPage from "./BudgetsPage/BudgetsPage";
 import RecurringPage from "./RecurringPage/RecurringPage";
 import TransactionsPage from "./TransactionsPage/TransactionsPage";
 
+import "./App.css";
+
 export type DataPots = {
   name: string;
   target: number;
