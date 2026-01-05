@@ -1,0 +1,21 @@
+.trans-list {
+  margin-top: 40px;
+}
+
+.trans-list__item {
+  display: flex;
+  margin-top: 15px;
+  padding-top: 15px;
+  font-size: 0.9rem;
+}
+
+.trans-list__item--primary {
+  border-top: 1px solid var(--light-grey);
+}
+
+.trans-list__item__avatar {
+  width: 35px;
+  height: 35px;
+  margin-right: 15px;
+  border-radius: 50%;
+}

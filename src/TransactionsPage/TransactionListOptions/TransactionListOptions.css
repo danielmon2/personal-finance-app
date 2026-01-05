@@ -1,0 +1,18 @@
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.options__input {
+  width: 300px;
+  padding-left: 10px;
+  background: url("./images/icon-search.svg") no-repeat 96% 50%;
+}
+
+.squared-border {
+  border-radius: 7px;
+  height: 40px;
+  border: 2px solid var(--light-grey);
+}

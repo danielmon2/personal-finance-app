@@ -1,0 +1,9 @@
+.trans-content {
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 30px;
+}
+
+.trans-content--primary {
+  background-color: white;
+}
