@@ -56,9 +56,9 @@ function TransactionsPage() {
   }
 
   return (
-    <main className="page page--primary">
+    <main className="page-main page-main--primary">
       <h1>Transactions</h1>
-      <section className="trans-list trans-list--primary">
+      <section className="trans-content trans-content--primary">
         <TransactionListOptions
           searchParams={newParams}
           setSearchParams={setSearchParams}
@@ -82,8 +82,10 @@ function standarizeSearchParams(
   }
 
   for (const [key, value] of newSearchParams.entries()) {
-    if (!SORTING.includes(value) && !CATEGORIES.includes(value)) {
-      newSearchParams.delete(key);
+    if (key !== "search") {
+      if (!SORTING.includes(value) && !CATEGORIES.includes(value)) {
+        newSearchParams.delete(key);
+      }
     }
   }
 
