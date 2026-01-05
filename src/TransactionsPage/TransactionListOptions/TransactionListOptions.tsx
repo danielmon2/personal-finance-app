@@ -1,4 +1,4 @@
-import StyledSelect from "./StyledSelect";
+import StyledSelect from "./StyledSelect/StyledSelect";
 import "./TransactionListOptions.css";
 
 type TransactionListOptionsProps = {
@@ -21,7 +21,7 @@ function TransactionListOptions({
   return (
     <div className="options">
       <input
-        className="options__input options__input--primary"
+        className="options__input squared-border"
         defaultValue={""}
         placeholder="Search transactions"
         onChange={(e) =>
@@ -30,26 +30,28 @@ function TransactionListOptions({
           )
         }
       ></input>
-      <StyledSelect
-        options={sorting}
-        type="sort"
-        current={
-          searchParams.get("sort") === null
-            ? "latest"
-            : (searchParams.get("sort") as string)
-        }
-        handleClick={handleSelectClick}
-      />
-      <StyledSelect
-        options={categories}
-        type="category"
-        current={
-          searchParams.get("category") === null
-            ? "all"
-            : (searchParams.get("category") as string)
-        }
-        handleClick={handleSelectClick}
-      />
+      <div className="flex">
+        <StyledSelect
+          options={sorting}
+          type="sort"
+          current={
+            searchParams.get("sort") === null
+              ? "latest"
+              : (searchParams.get("sort") as string)
+          }
+          handleClick={handleSelectClick}
+        />
+        <StyledSelect
+          options={categories}
+          type="category"
+          current={
+            searchParams.get("category") === null
+              ? "all"
+              : (searchParams.get("category") as string)
+          }
+          handleClick={handleSelectClick}
+        />
+      </div>
     </div>
   );
 }
