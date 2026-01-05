@@ -1,4 +1,5 @@
 import type { DataTransaction } from "../TransactionsPage";
+import "./TransactionList.css";
 
 type TransactionListProps = {
   transactionArr: DataTransaction;
@@ -6,7 +7,7 @@ type TransactionListProps = {
 
 function TransactionList({ transactionArr }: TransactionListProps) {
   return (
-    <ul>
+    <ul className="trans-list">
       {transactionArr.map((transactionItem, index) => (
         <article
           className="trans-list__item trans-list__item--primary"
@@ -18,18 +19,26 @@ function TransactionList({ transactionArr }: TransactionListProps) {
           />
           <div>
             <p className="font--bold">{transactionItem.name}</p>
-            <p className="font--grey">{transactionItem.category}</p>
+            <p className="text--grey">{transactionItem.category}</p>
           </div>
           <div className="margin-left--auto">
             <p className="text-align--rigth font--bold">
-              {transactionItem.amount}
+              {formatMoney(transactionItem.amount)}
             </p>
-            <p className="font--grey">{formatDate(transactionItem.date)}</p>
+            <p className="text--grey">{formatDate(transactionItem.date)}</p>
           </div>
         </article>
       ))}
     </ul>
   );
+}
+
+function formatMoney(amount: number): string {
+  if (amount > 0) {
+    return `+$${amount}`;
+  } else {
+    return `-$${Math.abs(amount)}`;
+  }
 }
 
 function formatDate(dateString: string): string {
