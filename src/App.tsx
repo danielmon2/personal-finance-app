@@ -67,7 +67,7 @@ export default function App() {
           ),
         },
         {
-          path: "/recurring",
+          path: "/recurring-bills",
           element: <RecurringPage />,
         },
         {
