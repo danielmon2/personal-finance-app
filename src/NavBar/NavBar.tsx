@@ -15,13 +15,19 @@ function NavBar() {
   return (
     <nav className="navbar navbar--primary">
       {paths.map((path) => {
-        let active = "";
+        let activeIcon = "";
+        let activeClass = "";
         if (URL === "/" + path) {
-          active = "-active";
+          activeIcon = "-active";
+          activeClass = " navbar__link--active";
         }
         return (
-          <Link to={"/" + path} onClick={() => setURL("/" + path)}>
-            <img src={`./images/icon-nav-${path}${active}.svg`} />
+          <Link
+            className={"navbar__link" + activeClass}
+            to={"/" + path}
+            onClick={() => setURL("/" + path)}
+          >
+            <img src={`./images/icon-nav-${path}${activeIcon}.svg`} />
           </Link>
         );
       })}
