@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import "./StyledSelect.css";
+import { useUserContext } from "../../../context";
 
 type StyledSelectProps = {
   options: string[];
@@ -18,9 +19,8 @@ function StyledSelect({
   const [isHidden, setIsHidden] = useState(true);
   const styledSelectRef = useRef(null);
   const labelText = type === "sort" ? "Sort by" : "Category";
-  const [isMobileWidth, setIsMobileWidth] = useState(window.innerWidth <= 767);
+  const isMobileWidth = useUserContext();
   // RESIZE!!!
-  // const isMobileWidth = window.innerWidth <= 767;
   const iconSource =
     type === "sort"
       ? "./images/icon-sort-mobile.svg"
@@ -32,13 +32,6 @@ function StyledSelect({
       const lastChild = parent!.lastChild! as HTMLElement;
       lastChild.style.top = `${parent.offsetTop + parent.clientHeight + 10}px`;
       lastChild.style.left = `${parent.offsetLeft + parent.offsetWidth}px`;
-    }
-    if (window.innerWidth <= 767) {
-      console.log("1");
-      setIsMobileWidth(true);
-    } else {
-      console.log("2");
-      setIsMobileWidth(false);
     }
   }
 

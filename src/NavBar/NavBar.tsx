@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import { useUserContext } from "../context";
 
 function NavBar() {
   const [URL, setURL] = useState(window.location.pathname);
+  const isMobileWidth = useUserContext();
   const paths = [
     "overview",
     "transactions",
