@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import OverviewPage from "./OverviewPage/OverviewPage";
@@ -10,6 +10,7 @@ import TransactionsPage from "./TransactionsPage/TransactionsPage";
 
 import "./App.css";
 import NavBar from "./NavBar/NavBar";
+import { MobileContext } from "./context";
 
 export type DataPots = {
   name: string;
@@ -27,6 +28,21 @@ export type DataBudgets = {
 export default function App() {
   const [potsState, setPotsState] = useState<DataPots>(data.pots);
   const [budgetState, setBudgetState] = useState<DataBudgets>(data.budgets);
+  const [isMobileWidth, setIsMobileWidth] = useState(window.innerWidth <= 767);
+
+  useEffect(() => {
+    function onWindowResize(): void {
+      if (window.innerWidth <= 767) {
+        setIsMobileWidth(true);
+      } else {
+        setIsMobileWidth(false);
+      }
+    }
+
+    window.addEventListener("resize", onWindowResize);
+    onWindowResize();
+    return () => window.removeEventListener("resize", onWindowResize);
+  }, []);
 
   const AppLayout = () => (
     <>
@@ -80,7 +96,9 @@ export default function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <MobileContext.Provider value={isMobileWidth}>
+        <RouterProvider router={router} />
+      </MobileContext.Provider>
     </>
   );
 }
