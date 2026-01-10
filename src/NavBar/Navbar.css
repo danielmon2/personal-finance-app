@@ -15,9 +15,10 @@
 }
 
 .navbar__link {
-  flex: 1;
+  width: 100%;
   padding: 15px 0 10px 0;
   border-radius: 10px 10px 0 0;
+  text-decoration: none;
 }
 
 .navbar__link--active {
@@ -37,4 +38,32 @@
   height: 20px;
   display: block;
   margin: auto auto;
+}
+
+.navbar__link__name {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.navbar__link__name--primary {
+  color: #b3b3b3;
+}
+
+.navbar__link__name--active {
+  color: var(--green);
+}
+
+@media (min-width: 1280px) {
+  .navbar {
+    width: 300px;
+    height: 100%;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px 0 0;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .navbar__link {
+    border-radius: 0 10px 10px 0;
+  }
 }
