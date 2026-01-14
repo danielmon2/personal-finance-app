@@ -13,7 +13,7 @@ export function useWindowWidth() {
 function getSnapshot() {
   const newWindowWidth = {
     mobile: window.innerWidth <= 767,
-    tablet: window.innerWidth <= 1280,
+    tablet: window.innerWidth <= 1280 && window.innerWidth > 767,
     desktop: window.innerWidth > 1280,
   };
 
