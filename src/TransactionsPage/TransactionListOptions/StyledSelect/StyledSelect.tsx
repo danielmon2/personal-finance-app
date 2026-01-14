@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import "./StyledSelect.css";
-import { useUserContext } from "../../../context";
+import { useWindowWidth } from "../../../useWindowWidth";
 
 type StyledSelectProps = {
   options: string[];
@@ -17,10 +17,10 @@ function StyledSelect({
   handleClick,
 }: StyledSelectProps) {
   const [isHidden, setIsHidden] = useState(true);
-  const styledSelectRef = useRef(null);
+  const styledSelectRef = useRef<HTMLDivElement>(null);
   const labelText = type === "sort" ? "Sort by" : "Category";
-  const isMobileWidth = useUserContext();
-  // RESIZE!!!
+  // const isMobileWidth = useUserContext();
+  const windowWidth = useWindowWidth();
   const iconSource =
     type === "sort"
       ? "./images/icon-sort-mobile.svg"
@@ -36,23 +36,27 @@ function StyledSelect({
   }
 
   useEffect(() => {
-    window.onresize = resizeSelectEl;
+    window.addEventListener("resize", resizeSelectEl);
+    return () => window.removeEventListener("resize", resizeSelectEl);
   }, []);
 
   return (
     <div ref={styledSelectRef} className="styled-select">
-      {!isMobileWidth && <label htmlFor={type + "-select"}>{labelText}</label>}
+      {!windowWidth.mobile && (
+        <label htmlFor={type + "-select"}>{labelText}</label>
+      )}
       <button
         id={type + "-select"}
         className={
-          "select-options__dropdown" + (!isMobileWidth ? " squared-border" : "")
+          "select-options__dropdown" +
+          (!windowWidth.mobile ? " squared-border" : "")
         }
         onClick={() => {
           setIsHidden(!isHidden);
           resizeSelectEl();
         }}
       >
-        {isMobileWidth ? (
+        {windowWidth.mobile && !windowWidth.tablet && !windowWidth.desktop ? (
           <img className="select-options__icon" src={iconSource} />
         ) : (
           <>
