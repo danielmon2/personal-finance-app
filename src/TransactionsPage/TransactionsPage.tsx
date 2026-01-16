@@ -56,7 +56,7 @@ function TransactionsPage() {
   }
 
   return (
-    <main className="page-main page-main--primary">
+    <main className="page-main page-main--primary page-main__navbar-offset">
       <h1>Transactions</h1>
       <section className="trans-content trans-content--primary">
         <TransactionListOptions

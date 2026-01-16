@@ -3,6 +3,8 @@
   --dark-grey: #201f24;
   --light-grey: #b3b3b3;
   --lightest-grey: #dbdbdb;
+  --brown: #201f24;
+  --green: #395b59;
 }
 
 * {
@@ -19,6 +21,10 @@ button {
 
 .page-main {
   margin: 20px;
+}
+
+.page-main__navbar-offset {
+  margin-bottom: 75px;
 }
 
 body,
@@ -54,4 +60,19 @@ body,
 @font-face {
   font-family: "Public Sans Italic";
   src: url("./fonts/PublicSans-Italic-VariableFont_wght.ttf");
+}
+@media (min-width: 768px) {
+  .page-main__navbar-offset {
+    margin-bottom: 85px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-main__navbar-offset {
+    margin-left: 330px;
+  }
+
+  .page-main {
+    margin-bottom: 20px;
+  }
 }
