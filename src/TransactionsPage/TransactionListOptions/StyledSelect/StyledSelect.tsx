@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./StyledSelect.css";
 import { useWindowWidth } from "../../../useWindowWidth";
@@ -26,18 +26,12 @@ function StyledSelect({
       ? "./images/icon-sort-mobile.svg"
       : "./images/icon-filter-mobile.svg";
 
-  function resizeSelectEl(): void {
-    if (styledSelectRef !== null) {
-      const parent = styledSelectRef!.current! as HTMLElement;
-      const lastChild = parent!.lastChild! as HTMLElement;
-      lastChild.style.top = `${parent.offsetTop + parent.clientHeight + 10}px`;
-      lastChild.style.left = `${parent.offsetLeft + parent.offsetWidth}px`;
-    }
-  }
-
   useEffect(() => {
-    window.addEventListener("resize", resizeSelectEl);
-    return () => window.removeEventListener("resize", resizeSelectEl);
+    window.addEventListener("resize", () => resizeSelectEl(styledSelectRef));
+    return () =>
+      window.removeEventListener("resize", () =>
+        resizeSelectEl(styledSelectRef)
+      );
   }, []);
 
   return (
@@ -53,7 +47,7 @@ function StyledSelect({
         }
         onClick={() => {
           setIsHidden(!isHidden);
-          resizeSelectEl();
+          resizeSelectEl(styledSelectRef);
         }}
       >
         {windowWidth.mobile && !windowWidth.tablet && !windowWidth.desktop ? (
@@ -105,6 +99,21 @@ function paramToString(param: string, type: string): string {
   }
 
   return string;
+}
+
+function resizeSelectEl(
+  styledSelectRef: React.RefObject<HTMLDivElement | null>
+) {
+  if (styledSelectRef.current !== null) {
+    const ref = styledSelectRef.current;
+    const lastChild = ref.lastChild as HTMLDivElement;
+
+    if (lastChild !== null) {
+      lastChild.style.top = `${ref.offsetTop + ref.clientHeight + 10}px`;
+
+      lastChild.style.left = `${ref.offsetLeft + ref.offsetWidth}px`;
+    }
+  }
 }
 
 export default StyledSelect;
