@@ -1,0 +1,19 @@
+.floating-select__option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 7px 15px;
+  font-size: 1rem;
+}
+
+.floating-select__option--primary {
+  background-color: white;
+}
+
+.floating-select__option--active {
+  background-color: var(--lightest-grey);
+}
+
+.floating-select__option:hover {
+  background-color: var(--lightest-grey);
+}
