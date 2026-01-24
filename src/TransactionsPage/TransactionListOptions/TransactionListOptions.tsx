@@ -26,11 +26,11 @@ function TransactionListOptions({
         placeholder="Search transactions"
         onChange={(e) =>
           setSearchParams(
-            createNewSearchParams(searchParams, e.target.value, "search")
+            createNewSearchParams(searchParams, e.target.value, "search"),
           )
         }
       ></input>
-      <div className="flex">
+      <div className="options__selects">
         <StyledSelect
           options={sorting}
           type="sort"
@@ -59,7 +59,7 @@ function TransactionListOptions({
 function createNewSearchParams(
   searchParams: URLSearchParams,
   value: string,
-  type: string
+  type: string,
 ): URLSearchParams {
   const newSearchParams = new URLSearchParams(searchParams);
   newSearchParams.set(type, value);

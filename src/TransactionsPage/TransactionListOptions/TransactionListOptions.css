@@ -11,6 +11,12 @@
   background: url("./images/icon-search.svg") no-repeat 96% 50%;
 }
 
+.options__selects {
+  display: flex;
+  gap: 20px;
+  margin-left: 20px;
+}
+
 .squared-border {
   border-radius: 7px;
   height: 40px;

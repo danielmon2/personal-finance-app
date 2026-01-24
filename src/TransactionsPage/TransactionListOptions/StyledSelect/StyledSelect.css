@@ -1,38 +1,3 @@
-.styled-select {
-  position: static;
-  margin-left: 25px;
-}
-
-.select-options {
-  position: absolute;
-  translate: -100% 0;
-  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  overflow: hidden;
-  min-width: 120px;
-  /* padding: 10px 0; */
-}
-
-/* .select-options--primary {
-  background-color: green;
-} */
-
-.select-options__btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 7px 15px;
-  font-size: 1rem;
-}
-
-.select-options__btn--active {
-  background-color: var(--lightest-grey);
-}
-
-.select-options__btn:hover {
-  background-color: var(--lightest-grey);
-}
-
 .select-options__icon {
   width: 20px;
 }
