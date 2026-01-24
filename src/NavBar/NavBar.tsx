@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useWindowWidth } from "../hooks/useWindowWidth";
+
 import "./Navbar.css";
-import { useWindowWidth } from "../useWindowWidth";
 
 function NavBar() {
   const [URL, setURL] = useState(window.location.pathname);

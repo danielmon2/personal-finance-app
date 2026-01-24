@@ -65,9 +65,11 @@
   .navbar {
     height: 60px;
   }
+
   .navbar__link {
     flex-direction: column;
   }
+
   .navbar__link__name {
     font-size: 0.8rem;
   }
@@ -115,5 +117,6 @@
 
   .navbar__link__name {
     margin: 0;
+    font-size: 1rem;
   }
 }
