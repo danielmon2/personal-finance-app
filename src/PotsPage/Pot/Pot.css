@@ -1,0 +1,101 @@
+.pot {
+  background-color: white;
+  margin-top: 20px;
+  padding: 25px 20px;
+  border-radius: 20px;
+}
+
+.pot__top-row {
+  display: flex;
+  align-items: center;
+}
+
+.pot__title {
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.pot__color-ball {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.pot__select {
+  margin-left: auto;
+}
+
+.pot__ellipsis {
+  background: url("/images/icon-ellipsis.svg") no-repeat 50% 50%;
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+}
+
+.pot__ellipsis:hover {
+  filter: brightness(0.3);
+}
+
+.pot__total-saved {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
+
+.pot__total-saved__label {
+  font-size: 0.9em;
+  color: gray;
+}
+
+.pot__total-saved__amount {
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.pot__bar {
+  height: 8px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.pot__bar--bg {
+  background-color: var(--beige);
+}
+
+.pot__target {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.pot__target__percent {
+  font-weight: 700;
+  color: var(--dark-grey);
+}
+
+.pot__btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.pot__btn {
+  width: 100%;
+  background-color: var(--beige);
+  height: 40px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.pot__btn:hover {
+  filter: brightness(0.9);
+}
+
+.red-text {
+  color: red;
+}
