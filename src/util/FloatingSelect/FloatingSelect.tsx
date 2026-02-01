@@ -4,10 +4,15 @@ import "./FloatingSelect.css";
 
 type FloatingSelectProps = {
   frontButton: JSX.Element;
-  children: JSX.Element[];
+  children: JSX.Element | JSX.Element[];
+  className?: string;
 };
 
-function FloatingSelect({ frontButton, children }: FloatingSelectProps) {
+function FloatingSelect({
+  frontButton,
+  children,
+  className,
+}: FloatingSelectProps) {
   const [isHidden, setIsHidden] = useState(true);
   const floatingSelectRef = useRef<HTMLDivElement>(null);
   const floatingSelectId = `floating-select-${useId()}`;
@@ -32,7 +37,11 @@ function FloatingSelect({ frontButton, children }: FloatingSelectProps) {
   }, [floatingSelectId]);
 
   return (
-    <div id={floatingSelectId} ref={floatingSelectRef}>
+    <div
+      id={floatingSelectId}
+      ref={floatingSelectRef}
+      className={className || ""}
+    >
       <div
         className="floating-select__front-btn"
         onClick={() => {
@@ -58,7 +67,6 @@ function moveFloatingSelect(
 ) {
   if (floatingSelectRef.current !== null) {
     const parent = floatingSelectRef.current;
-    console.log(parent);
     const lastChild = parent.lastChild as HTMLDivElement;
 
     if (lastChild !== null) {
