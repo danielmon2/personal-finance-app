@@ -6,12 +6,14 @@ type FloatingSelectProps = {
   frontButton: JSX.Element;
   children: JSX.Element | JSX.Element[];
   className?: string;
+  optionsClassName?: string;
 };
 
 function FloatingSelect({
   frontButton,
   children,
   className,
+  optionsClassName,
 }: FloatingSelectProps) {
   const [isHidden, setIsHidden] = useState(true);
   const floatingSelectRef = useRef<HTMLDivElement>(null);
@@ -52,7 +54,7 @@ function FloatingSelect({
         {frontButton}
       </div>
       <div
-        className="floating-select__options"
+        className={"floating-select__options " + (optionsClassName || "")}
         onClick={() => setIsHidden(true)}
         hidden={isHidden}
       >
