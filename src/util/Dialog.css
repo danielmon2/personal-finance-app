@@ -1,0 +1,60 @@
+.dialog {
+  margin: auto;
+  width: 80%;
+  overflow: visible;
+  border: none;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.dialog::backdrop {
+  filter: brightness(0.8);
+}
+
+.dialog__top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.dialog__close-icon {
+  width: 25px;
+}
+
+.dialog__paragraph {
+  margin: 5px 0;
+}
+
+.dialog__label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgb(89, 89, 89);
+  margin: 5px 0;
+}
+
+.dialog__input {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(89, 89, 89);
+  color: rgb(89, 89, 89);
+  margin: 5px 0;
+}
+
+.dialog__submit-btn {
+  font-weight: bold;
+  width: 100%;
+  padding: 15px 0;
+  border-radius: 10px;
+}
+
+.dialog__submit-btn--black-bg {
+  color: white;
+  background-color: black;
+}
+
+.dialog__submit-btn--black-bg:hover {
+  background-color: rgb(61, 61, 61);
+}
